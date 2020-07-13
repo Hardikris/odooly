@@ -936,7 +936,7 @@ class Client(object):
 
         def get_service(name):
             methods = list(_methods[name]) if (name in _methods) else []
-            if float_version < 8.0:
+            if float_version < 1.5:
                 methods += _obsolete_methods.get(name) or ()
             return Service(self, name, methods, verbose=verbose)
 
@@ -944,13 +944,13 @@ class Client(object):
         self.server_version = ver = get_service('db').server_version()
         self.major_version = re.match(r'\d+\.?\d*', ver).group()
         self.version_info = float_version = float(self.major_version)
-        assert float_version > 6.0, 'Not supported: %s' % ver
+        assert float_version > 1.4, 'Not supported: %s' % ver
         # Create the RPC services
         self.db = get_service('db')
         self.common = get_service('common')
         self._object = get_service('object')
-        self._report = get_service('report') if float_version < 11.0 else None
-        self._wizard = get_service('wizard') if float_version < 7.0 else None
+        self._report = get_service('report') if float_version < 1.5 else None
+        self._wizard = get_service('wizard') if float_version < 1.5 else None
 
     def _proxy_dispatch(self, name):
         if self._server._api_v7:
