@@ -1425,6 +1425,9 @@ class BaseRecord(BaseModel):
     def __len__(self):
         return len(self.ids)
 
+    def count(self):
+        return len(self.ids)
+
     def __getitem__(self, key):
         idname = self._idnames[key]
         if idname is False and not isinstance(key, slice):
